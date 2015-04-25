@@ -54,6 +54,8 @@
 					}
 				},
 				start : function (ev){
+					if (ev.which != 1)return;
+					ev.preventDefault();
 					var di = Drag.draggedItem;
 					var mi = Drag.movedItem;
 					var disX = ev.pageX - di.offset().left;
@@ -83,9 +85,6 @@
 					return false;
 				},
 				drag : function (ev){
-					if (opts.onDrag && $.isFunction(opts.onDrag)){
-						opts.onDrag.call(this, ev);
-					}
 					var di = Drag.draggedItem;
 					var mi = Drag.movedItem;
 					var pl = Drag.placeholder;
@@ -167,6 +166,14 @@
 	$.fn.dragsort.defaults = {
 		container : '.containerClass',
 		draggedItemClass : '.handlerClass',
-		onDragEnd : function(){}
+		onPrepare : function (){
+			log('Preparing');
+		},
+		onDrag : function (ev){
+			log(ev.pageX, ev.pageY);
+		},
+		onDragEnd : function (){
+			log('Ending callback');
+		}
 	};
 })(jQuery, document);
