@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>Examples</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<style>
+	*{margin:0;padding:0;}
+	ul{list-style-type: none;}
+	#main{position: relative;;margin:0 auto;}
+	#wrapper{width:960px;position: relative;margin:0 auto;}
+	.col-primary{min-height:200px;height:auto;}
+	.col{height:200px;}
+</style>
+</head>
+<body>
+   <div class="offset1 row">
+   	<button class="btn btn-primary">Button01</button>
+   	<button class="btn btn-primary">Button02</button>
+   	<button class="btn btn-primary">Button03</button>
+   	<button class="btn btn-primary">Button04</button>
+   	<button class="btn btn-primary">Button05</button>
+   	<button class="btn btn-primary">Button06</button>
+   	<button class="btn btn-primary">Button07</button>
+   	<button class="btn btn-primary">Button08</button>
+   	<button class="btn btn-danger">	Test Btn</button>
+   </div>
+    <div class="container">	
+    <div id="wrapper" class="span12">
+    	
+    </div>
+    </div>
+</body>
+<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript">
+	$(function (){
+		$('.btn').on('click', function (){
+			var index = $(this).index();
+			if (index < 8) {
+				appendLayout(index, $('#wrapper'));
+			} else {
+				var span9 = $('#wrapper').find('.span9');
+				var oTarget = span9.eq(span9.length-1);
+				console.log(oTarget);
+				appendLayout(2,oTarget);
+			}
+		})
+	});
+
+	var layoutMapping = {
+		0 : ['span12'],
+		1 : ['span3', 'span9'],
+		2 : ['span9', 'span3'],
+		3 : ['span6', 'span6'],
+		4 : ['span4', 'span4', 'span4'],
+		5 : ['span3', 'span3', 'span6'],
+		6 : ['span3', 'span3', 'span3', 'span3'],
+		7 : ['span2', 'span2', 'span2', 'span2', 'span2', 'span2']
+	};
+	function appendLayout(index, parentObject){
+		var fragment = '<div class="span12"><div class="col-primary row-fluid">';
+		var arr = layoutMapping[index];
+		for (var i=0,l=arr.length; i<l;i++){
+			var oCol = '<div class="col ' + arr[i] + '"></div>';
+			fragment += oCol;
+		}
+		fragment += '</div></div>';
+		var oCol = $(fragment);
+		oCol.find('.col').css({
+			'background-color' : '#' + rndColor(6)
+		});
+		oCol.appendTo(parentObject);
+	}
+
+	function rndColor(l){
+		var c = '';
+		for (var i=0;i<l;i++) {
+			c += (Math.round(Math.random()*16)).toString(16);
+		}
+		return c;
+	}
+
+</script>
+</html>
